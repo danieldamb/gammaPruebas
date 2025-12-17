@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Glosario Ferroviario Interactivo</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================
+     FONDO (renombrado: bg-container)
+     ============================ */
+  .bg-container{
+    --bgc-0:#fff; --bgc-1:#111; --bgc-2:#222; --bgc-3:#333; --bgc-4:#2e2e2e;
+    --bgc-5:#d2b48c; --bgc-6:#b22222; --bgc-7:#871a1a; --bgc-8:#ff6347; --bgc-9:#ff3814;
+    position:fixed; inset:0; width:100%; height:100%; z-index:-1;
+    background-color:var(--bgc-1);
+    background-image:
+      linear-gradient(to top, var(--bgc-2) 5%, var(--bgc-1) 6%, var(--bgc-1) 7%, transparent 7%),
+      linear-gradient(to bottom, var(--bgc-1) 30%, transparent 80%),
+      linear-gradient(to right, var(--bgc-2), var(--bgc-4) 5%, transparent 5%),
+      linear-gradient(to right, transparent 6%, var(--bgc-2) 6%, var(--bgc-4) 9%, transparent 9%),
+      linear-gradient(to right, transparent 27%, var(--bgc-2) 27%, var(--bgc-4) 34%, transparent 34%),
+      linear-gradient(to right, transparent 51%, var(--bgc-2) 51%, var(--bgc-4) 57%, transparent 57%),
+      linear-gradient(to bottom, var(--bgc-1) 35%, transparent 35%),
+      linear-gradient(to right, transparent 42%, var(--bgc-2) 42%, var(--bgc-4) 44%, transparent 44%),
+      linear-gradient(to right, transparent 45%, var(--bgc-2) 45%, var(--bgc-4) 47%, transparent 47%),
+      linear-gradient(to right, transparent 48%, var(--bgc-2) 48%, var(--bgc-4) 50%, transparent 50%),
+      linear-gradient(to right, transparent 87%, var(--bgc-2) 87%, var(--bgc-4) 91%, transparent 91%),
+      linear-gradient(to bottom, var(--bgc-1) 37.5%, transparent 37.5%),
+      linear-gradient(to right, transparent 14%, var(--bgc-2) 14%, var(--bgc-4) 20%, transparent 20%),
+      linear-gradient(to bottom, var(--bgc-1) 40%, transparent 40%),
+      linear-gradient(to right, transparent 10%, var(--bgc-2) 10%, var(--bgc-4) 13%, transparent 13%),
+      linear-gradient(to right, transparent 21%, var(--bgc-2) 21%, #1a1a1a 25%, transparent 25%),
+      linear-gradient(to right, transparent 58%, var(--bgc-2) 58%, var(--bgc-4) 64%, transparent 64%),
+      linear-gradient(to right, transparent 92%, var(--bgc-2) 92%, var(--bgc-4) 95%, transparent 95%),
+      linear-gradient(to bottom, var(--bgc-1) 48%, transparent 48%),
+      linear-gradient(to right, transparent 96%, var(--bgc-2) 96%, #1a1a1a 99%, transparent 99%),
+      linear-gradient(to bottom, transparent 68.5%, transparent 76%, var(--bgc-1) 76%, var(--bgc-1) 77.5%, transparent 77.5%, transparent 86%, var(--bgc-1) 86%, var(--bgc-1) 87.5%, transparent 87.5%),
+      linear-gradient(to right, transparent 35%, var(--bgc-2) 35%, var(--bgc-4) 41%, transparent 41%),
+      linear-gradient(to bottom, var(--bgc-1) 68%, transparent 68%),
+      linear-gradient(to right, transparent 78%, var(--bgc-3) 78%, var(--bgc-3) 80%, transparent 80%, transparent 82%, var(--bgc-3) 82%, var(--bgc-3) 83%, transparent 83%),
+      linear-gradient(to right, transparent 66%, var(--bgc-2) 66%, var(--bgc-4) 85%, transparent 85%);
+    background-size:300px 150px;
+    background-position:center bottom;
+    pointer-events: none; /* <-- crucial: allow clicks through el fondo */
+  }
+
+  .bg-container::before{
+    content:""; position:absolute; inset:0; background-color:var(--bgc-1);
+    background-image:
+      linear-gradient(to top, var(--bgc-5) 5%, var(--bgc-1) 6%, var(--bgc-1) 7%, transparent 7%),
+      linear-gradient(to bottom, var(--bgc-1) 30%, transparent 30%),
+      linear-gradient(to right, var(--bgc-6), var(--bgc-7) 5%, transparent 5%),
+      linear-gradient(to right, transparent 6%, var(--bgc-8) 6%, var(--bgc-9) 9%, transparent 9%),
+      linear-gradient(to right, transparent 27%, #556b2f 27%, #39481f 34%, transparent 34%),
+      linear-gradient(to right, transparent 51%, #fa8072 51%, #f85441 57%, transparent 57%),
+      linear-gradient(to bottom, var(--bgc-1) 35%, transparent 35%),
+      linear-gradient(to right, transparent 42%, #008080 42%, #004d4d 44%, transparent 44%),
+      linear-gradient(to right, transparent 45%, #008080 45%, #004d4d 47%, transparent 47%),
+      linear-gradient(to right, transparent 48%, #008080 48%, #004d4d 50%, transparent 50%),
+      linear-gradient(to right, transparent 87%, #789 87%, #4f5d6a 91%, transparent 91%),
+      linear-gradient(to bottom, var(--bgc-1) 37.5%, transparent 37.5%),
+      linear-gradient(to right, transparent 14%, #bdb76b 14%, #989244 20%, transparent 20%),
+      linear-gradient(to bottom, var(--bgc-1) 40%, transparent 40%),
+      linear-gradient(to right, transparent 10%, #808000 10%, #4d4d00 13%, transparent 13%),
+      linear-gradient(to right, transparent 21%, #8b4513 21%, #5e2f0d 25%, transparent 25%),
+      linear-gradient(to right, transparent 58%, #8b4513 58%, #5e2f0d 64%, transparent 64%),
+      linear-gradient(to right, transparent 92%, #2f4f4f 92%, #1c2f2f 95%, transparent 95%),
+      linear-gradient(to bottom, var(--bgc-1) 48%, transparent 48%),
+      linear-gradient(to right, transparent 96%, #2f4f4f 96%, #1c2f2f 99%, transparent 99%),
+      linear-gradient(to bottom, transparent 68.5%, transparent 76%, var(--bgc-1) 76%, var(--bgc-1) 77.5%, transparent 77.5%, transparent 86%, var(--bgc-1) 86%, var(--bgc-1) 87.5%, transparent 87.5%),
+      linear-gradient(to right, transparent 35%, #cd5c5c 35%, #bc3a3a 41%, transparent 41%),
+      linear-gradient(to bottom, var(--bgc-1) 68%, transparent 68%),
+      linear-gradient(to right, transparent 78%, #bc8f8f 78%, #bc8f8f 80%, transparent 80%, transparent 82%, #bc8f8f 82%, #bc8f8f 83%, transparent 83%),
+      linear-gradient(to right, transparent 66%, #a52a2a 66%, #7c2020 85%, transparent 85%);
+    background-size:300px 150px;
+    background-position:center bottom;
+    clip-path: circle(150px at center center);
+    animation: bg-flashlight 20s ease infinite;
+    pointer-events: none;
+  }
+
+  .bg-container::after{
+    content:""; width:25px; height:10px; position:absolute; left:calc(50% + 59px); bottom:100px;
+    background-repeat:no-repeat;
+    background-image: radial-gradient(circle,#fff 50%,transparent 50%), radial-gradient(circle,#fff 50%,transparent 50%);
+    background-size:10px 10px; background-position:left center, right center;
+    animation: bg-eyes 20s infinite;
+    pointer-events: none;
+  }
+
+  @keyframes bg-flashlight {
+    0% { clip-path: circle(150px at -25% 10%); }
+    38% { clip-path: circle(150px at 60% 20%); }
+    39% { opacity: 1; clip-path: circle(150px at 60% 86%); }
+    40% { opacity: 0; clip-path: circle(150px at 60% 86%); }
+    41% { opacity: 1; clip-path: circle(150px at 60% 86%); }
+    42% { opacity: 0; clip-path: circle(150px at 60% 86%); }
+    54% { opacity: 0; clip-path: circle(150px at 60% 86%); }
+    55% { opacity: 1; clip-path: circle(150px at 60% 86%); }
+    59% { opacity: 1; clip-path: circle(150px at 60% 86%); }
+    64% { clip-path: circle(150px at 45% 78%); }
+    68% { clip-path: circle(150px at 85% 89%); }
+    72% { clip-path: circle(150px at 60% 86%); }
+    74% { clip-path: circle(150px at 60% 86%); }
+    100% { clip-path: circle(150px at 150% 50%); }
+  }
+
+  @keyframes bg-eyes {
+    0%,38% { opacity:0; }
+    39%,41% { opacity:1; transform:scaleY(1); }
+    40% { transform:scaleY(0); filter:none; }
+    41% { transform:scaleY(1); background-image: radial-gradient(circle,#ff0000 50%,transparent 50%), radial-gradient(circle,#ff0000 50%,transparent 50%); filter:drop-shadow(0 0 4px #ff8686); }
+    42%,100% { opacity:0; }
+  }
+
+  /* ============================
+     CONTENIDO (encima del fondo)
+     ============================ */
+  :root {
+    --accent: #007279;
+    --bg: #f4f6f8;
+    --card-bg: #ffffff;
+    --text: #222;
+  }
+
+  body {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  /* coloca el contenido por encima del fondo */
+  .app {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+  }
+
+  header {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: var(--accent);
+    color: white;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+  }
+
+  header h1 { margin:0; font-size:2rem; }
+
+  .alphabet-nav {
+    display:flex; 
+    flex-wrap:wrap; 
+    justify-content:center; 
+    gap:.9rem;
+    padding:0rem; 
+    
+  }
+
+  .alphabet-nav button {
+    background:var(--card-bg);
+    border:1.5px solid var(--accent);
+    color:var(--accent);
+    padding:.7rem .9rem;
+    font-weight:700;
+    font-size: 17px;
+    border-radius:.4rem;
+    cursor:pointer;
+    transition:all .25s ease;
+  }
+
+  .alphabet-nav button.active,
+  .alphabet-nav button:hover {
+    background:var(--accent); 
+    color:#fff;
+  }
+
+  .glossary { 
+    max-width:900px; 
+    margin:2rem auto; 
+    padding:0 1rem; 
+    opacity: 90%
+    
+  }
+
+  .group { margin-bottom:2rem; }
+
+  .group h2 {
+    background:var(--accent); 
+    color:white; 
+    padding:.5rem 1rem; 
+    border-radius:.5rem;
+  }
+
+  .term {
+    background:var(--card-bg); 
+    border-radius:.8rem; 
+    padding:1rem; 
+    margin:.5rem 0;
+    box-shadow:0 2px 6px rgba(0,0,0,.1);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  .term:hover { transform: translateY(-3px); box-shadow:0 4px 10px rgba(0,0,0,.15); }
+
+  .term h3 { margin:0 0 .3rem; color:var(--accent); }
+
+  .hidden { display:none; }
+
+  @media (max-width:600px) {
+    .term { padding:.8rem; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- fondo decorativo (no interactúa) -->
+  <div class="bg-container" aria-hidden="true"></div>
+
+  <!-- app content -->
+  <div class="app">
+    <header>
+      <h1>Glosario de la Unidad</h1>
+    </header>
+
+    <section class="glossary" aria-live="polite">
+      
+       <nav class="alphabet-nav" role="navigation" aria-label="Navegación alfabética">
+          <button data-group="A-C" class="active">A – C</button>
+          <button data-group="D-F">D – F</button>
+          <button data-group="G-I">G – k</button>
+          <button data-group="M-O">L – O</button>
+          <button data-group="P-R">P – R</button>
+          <button data-group="S-U">S – U</button>
+          <button data-group="V-Z">V – Z</button>
+          
+      </nav>
+    
+    
+      <!-- Grupo A-C -->
+      <div class="group" data-group="A-C">
+        <h2>A – C</h2>
+        <div class="term"><h3>Capacidad de carga</h3><p>Cantidad máxima de mercancías que puede transportar un tren.</p></div>
+        <div class="term"><h3>Carga ferroviaria</h3><p>Transporte de mercancías por ferrocarril.</p></div>
+        <div class="term"><h3>Centro de control de tráfico ferroviario</h3><p>Instalación desde la que se supervisan y coordinan las operaciones ferroviarias.</p></div>
+      </div>
+
+      <!-- Grupo D-F -->
+      <div class="group hidden" data-group="D-F">
+        <h2>D – F</h2>
+        <div class="term"><h3>Estación de clasificación</h3><p>Instalación donde se separan y organizan los vagones de mercancías según su destino.</p></div>
+        <div class="term"><h3>Estación de enlace</h3><p>Punto de conexión entre dos líneas ferroviarias.</p></div>
+        <div class="term"><h3>Estación de paso</h3><p>Parada intermedia de un tren en su recorrido.</p></div>
+        <div class="term"><h3>Estación de transbordo</h3><p>Instalación donde se realizan transferencias de carga entre diferentes trenes.</p></div>
+        <div class="term"><h3>Estación ferroviaria</h3><p>Lugar donde los trenes realizan paradas para el embarque y desembarque de pasajeros y mercancías.</p></div>
+        <div class="term"><h3>Estación terminal</h3><p>Punto final de un recorrido ferroviario.</p></div>
+      </div>
+
+      <!-- Grupo G-I -->
+      <div class="group hidden" data-group="G-I">
+        <h2>G – K</h2>
+        <div class="term"><h3>Horario de trenes</h3><p>Programación de salidas y llegadas de trenes en una determinada línea ferroviaria.</p></div>
+        <div class="term"><h3>Intermodalidad</h3><p>Integración de diferentes modos de transporte en un mismo trayecto, como el ferrocarril y el camión.</p></div>
+        <div class="term"><h3>Intersección ferroviaria</h3><p>Cruce de vías férreas que permite el cambio de dirección de los trenes.</p></div>
+      </div>
+
+      <!-- Grupo J-L -->
+      <div class="group hidden" data-group="J-L">
+        <h2>J – L</h2>
+        <!-- (sin términos en este rango en tu lista original) -->
+      </div>
+
+      <!-- Grupo M-O -->
+      <div class="group hidden" data-group="M-O">
+        <h2>L – O</h2>
+        <div class="term"><h3>Marcha de tren</h3><p>Recorrido planificado de un tren entre dos estaciones.</p></div>
+        <div class="term"><h3>Material rodante</h3><p>Conjunto de vehículos ferroviarios utilizados para el transporte de pasajeros y mercancías.</p></div>
+        <div class="term"><h3>Mercancía peligrosa</h3><p>Carga que presenta riesgos para la seguridad durante su transporte por ferrocarril.</p></div>
+        <div class="term"><h3>Operación ferroviaria</h3><p>Conjunto de actividades relacionadas con la gestión y operación de trenes y vías férreas.</p></div>
+      </div>
+
+      <!-- Grupo P-R -->
+      <div class="group hidden" data-group="P-R">
+        <h2>P – R</h2>
+        <div class="term"><h3>Pasajero ferroviario</h3><p>Persona que utiliza el tren como medio de transporte.</p></div>
+        <div class="term"><h3>Reglamento de circulación ferroviaria</h3><p>Normativa que regula la circulación de trenes en las vías.</p></div>
+        <div class="term"><h3>Regulación del tráfico ferroviario</h3><p>Control y gestión del flujo de trenes en las vías.</p></div>
+      </div>
+
+      <!-- Grupo S-U -->
+      <div class="group hidden" data-group="S-U">
+        <h2>S – U</h2>
+        <div class="term"><h3>Señalización ferroviaria</h3><p>Sistema de señales visuales y sonoras que regulan el tráfico de trenes en las vías.</p></div>
+        <div class="term"><h3>Servicio de cercanías</h3><p>Trenes que conectan zonas urbanas y suburbanas en trayectos cortos.</p></div>
+      </div>
+
+      <!-- Grupo V-Z -->
+      <div class="group hidden" data-group="V-Z">
+        <h2>V – Z</h2>
+        <div class="term"><h3>Tren de alta velocidad</h3><p>Servicio ferroviario que alcanza velocidades superiores a los 250 km/h.</p></div>
+        <div class="term"><h3>Tren de mercancías</h3><p>Composición ferroviaria destinada al transporte de carga.</p></div>
+        <div class="term"><h3>Tren de pasajeros</h3><p>Composición ferroviaria destinada al transporte de personas.</p></div>
+        <div class="term"><h3>Vía férrea</h3><p>Carril por el que circulan los trenes.</p></div>
+      </div>
+    </section>
+  </div>
+
+<script>
+  // lógica de filtrado (asegurada)
+  const buttons = document.querySelectorAll('.alphabet-nav button');
+  const groups = document.querySelectorAll('.group');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // manage active class
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const target = btn.dataset.group;
+      groups.forEach(g => {
+        if (g.dataset.group === target) {
+          g.classList.remove('hidden');
+          g.scrollIntoView({ behavior: 'smooth', block: 'start' }); // opcional: centra el grupo
+        } else {
+          g.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
